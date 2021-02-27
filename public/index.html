@@ -10,6 +10,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/main.css" />
   </head>
+
   <body>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +47,8 @@
           <div class="filters-container col">
             <div class="filters shadow">
               <h2 class="filters__title">Filters</h2>
-              <div class="filters__group">
+
+              <fieldset class="filters__group">
                 <label class="filter">
                   <input
                     class="filter__checkbox js-filter-product"
@@ -79,9 +81,9 @@
                   />
                   <span class="filter__label">TV</span>
                 </label>
-              </div>
+              </fieldset>
 
-              <div class="filters__group">
+              <fieldset class="filters__group">
                 <label class="filter">
                   <input
                     class="filter__checkbox js-filter-provider"
@@ -136,9 +138,10 @@
                   />
                   <span class="filter__label">Sky</span>
                 </label>
-              </div>
+              </fieldset>
             </div>
           </div>
+
           <div class="deals-container col">
             <ul id="deal-list" class="deal-list"></ul>
           </div>

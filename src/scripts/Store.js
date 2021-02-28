@@ -15,13 +15,24 @@ class Store extends Observable {
   }
 
   filter() {
+    console.log('filter!');
+    // console.log('productFilters: ', this.state.productFilters);
+
     if (this.state.productFilters.length) {
-      let filterTerms_products = this.state.productFilters[0];
-      let filteredDeals = this.state.deals.filter((deal, filterTerms_products) => {
-        if (deal.productTypes.length === 2 || deal.productTypes.indexOf(filterTerms_products) > -1) {
-          return deal;
-        }
+      let productFilters = this.state.productFilters;
+      let filteredDeals = this.state.deals.filter((deal) => {
+        let match = false; 
+
+        deal.productTypes.forEach((productType) => {
+          if (productFilters.indexOf(productType.toLowerCase()) > -1) {
+            match = true; 
+          }
+        });
+        
+        return match; 
       });
+
+      console.log('filteredDeals: ', filteredDeals); 
 
       return filteredDeals;
     } else {

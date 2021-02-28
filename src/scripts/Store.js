@@ -15,7 +15,18 @@ class Store extends Observable {
   }
 
   filter() {
-    return this.state.deals;
+    if (this.state.productFilters.length) {
+      let filterTerms_products = this.state.productFilters[0];
+      let filteredDeals = this.state.deals.filter((deal, filterTerms_products) => {
+        if (deal.productTypes.length === 2 || deal.productTypes.indexOf(filterTerms_products) > -1) {
+          return deal;
+        }
+      });
+
+      return filteredDeals;
+    } else {
+      return this.state.deals; 
+    }
   }
 
   setDeals(data) {

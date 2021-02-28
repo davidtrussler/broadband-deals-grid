@@ -2,7 +2,7 @@
 
 An exercise to implement the filter logic for a 'broadband deals' grid.
 
-Filter criteria
+## Filter criteria
 - WHEN no filters applied THEN show all 11 deals
 - WHEN filtering by broadband THEN show the 4 broadband only deals
 - WHEN filtering by broadband AND tv THEN show the 4 deals for broadband and tv only

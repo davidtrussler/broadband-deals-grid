@@ -11,7 +11,7 @@ describe("filter", () => {
 	});
 
 	// Scenario 1: WHEN filtering by broadband THEN show the 4 broadband only deals
-	it("should return all deals when no filters applied", () => {
+	xit("should return all deals when no filters applied", () => {
 		// Act
 		let result = sut.deals;
 
@@ -20,7 +20,7 @@ describe("filter", () => {
 	});
 
 	// Scenario 2: WHEN filtering by broadband THEN show the 4 broadband only deals
-	it("should return the 4 broadband only deals when filtering by broadband", () => {
+	xit("should return the 4 broadband only deals when filtering by broadband", () => {
 		// Act
 		let filterTerm = 'broadband', 
 				result;
@@ -30,5 +30,18 @@ describe("filter", () => {
 
 		// Assert
 		expect(result.map(deal => deal.id)).toEqual([6158, 4359, 4371, 5459]);
+	});
+
+	// Scenario 3: WHEN filtering by broadband AND tv THEN show the 4 deals for broadband and tv only
+	it("should return the 4 deals for broadband and tv only when filtering by broadband and tv", () => {
+		// Act
+		let filterTerms = ['broadband', 'TV'],
+				result;
+		sut.setProductFilter(filterTerms);
+		sut.filter();
+		result = sut.deals;
+
+		// Assert
+		expect(result.map(deal => deal.id)).toEqual([6074, 5738, 6165, 6468]);
 	});
 });

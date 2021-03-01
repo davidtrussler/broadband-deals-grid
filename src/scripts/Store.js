@@ -15,22 +15,36 @@ class Store extends Observable {
   }
 
   filter() {
-    console.log('filter!');
-    // console.log('productFilters: ', this.state.productFilters);
-
     if (this.state.productFilters.length) {
-      let productFilters = this.state.productFilters;
-      let filteredDeals = this.state.deals.filter((deal) => {
-        let match = false; 
+      let productFilters, 
+          filterableDeals, 
+          filteredDeals; 
 
-        deal.productTypes.forEach((productType) => {
-          if (productFilters.indexOf(productType.toLowerCase()) > -1) {
-            match = true; 
-          }
+      productFilters = this.state.productFilters;
+
+      filterableDeals = this.state.deals.map((deal) => {
+        deal.productTypes = deal.productTypes.map((productType) => {
+          productType = productType.toLowerCase();
+          productType = productType.replace('fibre ', '');
+
+          return productType; 
         });
-        
-        return match; 
+
+        if (deal.productTypes.includes('phone')) {
+          let index = deal.productTypes.indexOf('phone'); 
+          let productTypes = deal.productTypes.splice(index, 1); 
+        }
+
+        return deal; 
       });
+
+      filteredDeals = filterableDeals.filter(deal => 
+        productFilters.every((productFilter) => {
+          if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
+            return deal; 
+          }
+        })
+      );
 
       console.log('filteredDeals: ', filteredDeals); 
 

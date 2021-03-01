@@ -41,6 +41,6 @@ describe("filter", () => {
 		let result = sut.deals;
 
 		// Assert
-		// expect(result.map(deal => deal.id)).toEqual([6074, 5738, 6165, 6468]);
+		expect(result.map(deal => deal.id)).toEqual([6074, 5738, 6165, 6468]);
 	});
 });

@@ -11,7 +11,7 @@ describe("filter", () => {
 	});
 
 	// Scenario 1: WHEN filtering by broadband THEN show the 4 broadband only deals
-	xit("should return all deals when no filters applied", () => {
+	it("should return all deals when no filters applied", () => {
 		// Act
 		let result = sut.deals;
 
@@ -20,7 +20,7 @@ describe("filter", () => {
 	});
 
 	// Scenario 2: WHEN filtering by broadband THEN show the 4 broadband only deals
-	xit("should return the 4 broadband only deals when filtering by broadband", () => {
+	it("should return the 4 broadband only deals when filtering by broadband", () => {
 		// Act
 		sut.setProductFilter('Broadband');
 		sut.filter(); 
@@ -34,7 +34,6 @@ describe("filter", () => {
 	// Scenario 3: WHEN filtering by broadband AND tv THEN show the 4 deals for broadband and tv only
 	it("should return the 4 deals for broadband and tv only when filtering by broadband and tv", () => {
 		// Act
-		sut.setProductFilter('Broadband');
 		sut.setProductFilter('TV');
 		sut.filter();
 

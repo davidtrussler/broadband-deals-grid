@@ -16,13 +16,13 @@ class Store extends Observable {
 
   filter() {
     if (this.state.productFilters.length) {
-      let productFilters, 
-          filterableDeals, 
-          filteredDeals; 
+      let productFilters = this.state.productFilters,
+          filterable,
+          filtered, 
+          filteredIds, 
+          filteredDeals = [];
 
-      productFilters = this.state.productFilters;
-
-      filterableDeals = this.state.deals.map((deal) => {
+      filterable = this.state.deals.map((deal) => {
         deal.productTypes = deal.productTypes.map((productType) => {
           productType = productType.toLowerCase();
           productType = productType.replace('fibre ', '');
@@ -38,15 +38,21 @@ class Store extends Observable {
         return deal; 
       });
 
-      filteredDeals = filterableDeals.filter(deal => 
+      filtered = filterable.filter(deal => 
         productFilters.every((productFilter) => {
           if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
-            return deal; 
+            return deal;
           }
         })
       );
 
-      console.log('filteredDeals: ', filteredDeals); 
+      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
+
+      this.state.deals.forEach((deal) => {
+        if (filteredIds.includes(deal.id)) {
+          filteredDeals.push(deal);
+        }
+      });
 
       return filteredDeals;
     } else {

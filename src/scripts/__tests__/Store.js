@@ -42,4 +42,17 @@ describe("filter", () => {
 		// Assert
 		expect(result.map(deal => deal.id)).toEqual([6074, 5738, 6165, 6468]);
 	});
+
+	// Scenario 4: WHEN filtering by broadband AND mobile THEN show the 1 deal for broadband and mobile only
+	it("should return the 1 deal for broadband and mobile only when filtering by broadband and mobile", () => {
+		// Act
+		sut.setProductFilter('TV');
+		sut.setProductFilter('Mobile');
+		sut.filter();
+
+		let result = sut.deals;
+
+		// Assert
+		expect(result.map(deal => deal.id)).toEqual([4276]);
+	});
 });

@@ -22,14 +22,18 @@ class Store extends Observable {
           filteredIds, 
           filteredDeals = [];
 
+      // Create a new object of deals in filterable state 
       filterable = this.state.deals.map((deal) => {
         deal.productTypes = deal.productTypes.map((productType) => {
+          // Make all product names lower case
           productType = productType.toLowerCase();
+          // Consider 'Broadband' and 'Fibre Broadband' to be the same product
           productType = productType.replace('fibre ', '');
 
           return productType; 
         });
 
+        // Ignore 'Phone'
         if (deal.productTypes.includes('phone')) {
           let index = deal.productTypes.indexOf('phone'); 
           let productTypes = deal.productTypes.splice(index, 1); 
@@ -38,6 +42,7 @@ class Store extends Observable {
         return deal; 
       });
 
+      // Create an array of deal IDs that match the filter criteria 
       filtered = filterable.filter(deal => 
         productFilters.every((productFilter) => {
           if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
@@ -48,6 +53,7 @@ class Store extends Observable {
 
       filteredIds = filtered.map(filteredDeal => filteredDeal.id);
 
+      // Create an array of filtered deals to return
       this.state.deals.forEach((deal) => {
         if (filteredIds.includes(deal.id)) {
           filteredDeals.push(deal);

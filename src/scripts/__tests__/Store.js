@@ -55,4 +55,18 @@ describe("filter", () => {
 		// Assert
 		expect(result.map(deal => deal.id)).toEqual([4276]);
 	});
+
+	// Scenario 5: WHEN filtering by Sky THEN show the 1 deal for Sky only
+	it("should return the 1 deal for Sky only when filtering by Sky", () => {
+		// Act
+		sut.setProductFilter('Broadband');
+		sut.setProductFilter('Mobile');
+		sut.setProviderFilter('Sky'); 
+		sut.filter();
+
+		let result = sut.deals;
+
+		// Assert
+		expect(result.map(deal => deal.id)).toEqual([6468]);
+	});
 });

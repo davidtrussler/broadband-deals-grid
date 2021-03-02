@@ -22,6 +22,9 @@ class Store extends Observable {
         filteredIds = [],
         filteredDeals = [];
 
+    console.log('productFilters: ', productFilters); 
+    console.log('providerFilter: ', providerFilter); 
+
     // Create a new array of deals in filterable state
     filterable = this.state.deals.map((deal) => {
       deal.productTypes = deal.productTypes.map((productType) => {
@@ -42,26 +45,30 @@ class Store extends Observable {
       return deal; 
     });
 
-    if (this.state.productFilters.length) {
-      // Create an array of deal IDs that match the filter criteria 
-      filtered = filterable.filter(deal => 
-        productFilters.every((productFilter) => {
-          if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
+    if (this.state.productFilters.length || this.state.providerFilter) {
+      if (this.state.productFilters.length) {
+        // Create an array of deal IDs that match the filter criteria 
+        filtered = filterable.filter(deal => 
+          productFilters.every((productFilter) => {
+            if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
+              return deal;
+            }
+          })
+        );
+
+        filteredIds = filtered.map(filteredDeal => filteredDeal.id);
+      }
+
+      if (this.state.providerFilter) {
+        // Create an array of deal IDs that match the filter criteria 
+        filtered = filterable.filter((deal) => {
+          if (deal.provider.name == providerFilter) {
             return deal;
           }
-        })
-      );
+        });
 
-      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
-    } else if (this.state.providerFilter) {
-      // Create an array of deal IDs that match the filter criteria 
-      filtered = filterable.filter((deal) => {
-        if (deal.provider.name == providerFilter) {
-          return deal;
-        }
-      });
-
-      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
+        filteredIds = filtered.map(filteredDeal => filteredDeal.id);
+      }
     } else {
       filteredIds = this.state.deals.map(deal => deal.id); 
     }

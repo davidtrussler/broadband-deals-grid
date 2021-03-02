@@ -69,4 +69,18 @@ describe("filter", () => {
 		// Assert
 		expect(result.map(deal => deal.id)).toEqual([6468]);
 	});
+
+	// WHEN filtering by BT, broadband AND tv THEN show the 2 deals for BT with broadband and tv only
+	it("should return the 2 deals for BT with broadband and tv only when filtering by BT, broadband AND tv", () => {
+		// Act
+		sut.setProductFilter('TV');
+		sut.setProductFilter('Broadband');
+		sut.setProviderFilter('BT');
+		sut.filter();
+
+		let result = sut.deals;
+
+		// Assert
+		expect(result.map(deal => deal.id)).toEqual([6074, 5738]);
+	});
 });

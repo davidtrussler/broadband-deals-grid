@@ -61,6 +61,50 @@ class Store extends Observable {
       });
 
       return filteredDeals;
+    } else if (this.state.providerFilter) {
+      let providerFilter = this.state.providerFilter,
+          filterable,
+          filtered, 
+          filteredIds, 
+          filteredDeals = [];
+
+      // Create a new object of deals in filterable state 
+      filterable = this.state.deals.map((deal) => {
+        deal.productTypes = deal.productTypes.map((productType) => {
+          // Make all product names lower case
+          productType = productType.toLowerCase();
+          // Consider 'Broadband' and 'Fibre Broadband' to be the same product
+          productType = productType.replace('fibre ', '');
+
+          return productType; 
+        });
+
+        // Ignore 'Phone'
+        if (deal.productTypes.includes('phone')) {
+          let index = deal.productTypes.indexOf('phone'); 
+          let productTypes = deal.productTypes.splice(index, 1); 
+        }
+
+        return deal; 
+      });
+
+      // Create an array of deal IDs that match the filter criteria 
+      filtered = filterable.filter((deal) => {
+        if (deal.provider.name == providerFilter) {
+          return deal;
+        }
+      });
+
+      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
+
+      // Create an array of filtered deals to return
+      this.state.deals.forEach((deal) => {
+        if (filteredIds.includes(deal.id)) {
+          filteredDeals.push(deal);
+        }
+      });
+
+      return filteredDeals;
     } else {
       return this.state.deals; 
     }

@@ -15,33 +15,34 @@ class Store extends Observable {
   }
 
   filter() {
-    if (this.state.productFilters.length) {
-      let productFilters = this.state.productFilters,
-          filterable,
-          filtered, 
-          filteredIds, 
-          filteredDeals = [];
+    let productFilters = this.state.productFilters,
+        providerFilter = this.state.providerFilter,
+        filterable = [],
+        filtered = [],
+        filteredIds = [],
+        filteredDeals = [];
 
-      // Create a new object of deals in filterable state 
-      filterable = this.state.deals.map((deal) => {
-        deal.productTypes = deal.productTypes.map((productType) => {
-          // Make all product names lower case
-          productType = productType.toLowerCase();
-          // Consider 'Broadband' and 'Fibre Broadband' to be the same product
-          productType = productType.replace('fibre ', '');
+    // Create a new array of deals in filterable state
+    filterable = this.state.deals.map((deal) => {
+      deal.productTypes = deal.productTypes.map((productType) => {
+        // Make all product names lower case
+        productType = productType.toLowerCase();
+        // Consider 'Broadband' and 'Fibre Broadband' to be the same product
+        productType = productType.replace('fibre ', '');
 
-          return productType; 
-        });
-
-        // Ignore 'Phone'
-        if (deal.productTypes.includes('phone')) {
-          let index = deal.productTypes.indexOf('phone'); 
-          let productTypes = deal.productTypes.splice(index, 1); 
-        }
-
-        return deal; 
+        return productType; 
       });
 
+      // Ignore 'Phone'
+      if (deal.productTypes.includes('phone')) {
+        let index = deal.productTypes.indexOf('phone'); 
+        let productTypes = deal.productTypes.splice(index, 1); 
+      }
+
+      return deal; 
+    });
+
+    if (this.state.productFilters.length) {
       // Create an array of deal IDs that match the filter criteria 
       filtered = filterable.filter(deal => 
         productFilters.every((productFilter) => {
@@ -52,18 +53,27 @@ class Store extends Observable {
       );
 
       filteredIds = filtered.map(filteredDeal => filteredDeal.id);
-
-      // Create an array of filtered deals to return
-      this.state.deals.forEach((deal) => {
-        if (filteredIds.includes(deal.id)) {
-          filteredDeals.push(deal);
+    } else if (this.state.providerFilter) {
+      // Create an array of deal IDs that match the filter criteria 
+      filtered = filterable.filter((deal) => {
+        if (deal.provider.name == providerFilter) {
+          return deal;
         }
       });
 
-      return filteredDeals;
+      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
     } else {
-      return this.state.deals; 
+      filteredIds = this.state.deals.map(deal => deal.id); 
     }
+
+    // Create an array of filtered deals to return
+    this.state.deals.forEach((deal) => {
+      if (filteredIds.includes(deal.id)) {
+        filteredDeals.push(deal);
+      }
+    });
+
+    return filteredDeals;
   }
 
   setDeals(data) {

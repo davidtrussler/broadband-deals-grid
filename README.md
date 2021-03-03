@@ -14,3 +14,16 @@ An exercise to implement the filter logic for a 'broadband deals' grid.
 Notes: 
 - 'Broadband' and 'Fibre Broadband' should be considered the same product
 - 'Phone' should be ignored
+
+## Set up
+
+```bash
+# Install dependencies
+npm install
+
+# Run dev srerver and automatically open default browser
+npm run serve
+
+# Run tests
+npm run test
+```

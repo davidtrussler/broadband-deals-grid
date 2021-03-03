@@ -21,6 +21,9 @@ Notes:
 # Install dependencies
 npm install
 
+# Serve JSON data
+npm run db
+
 # Run dev srerver and automatically open default browser
 npm run serve
 

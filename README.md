@@ -9,6 +9,8 @@ An exercise to implement the filter logic for a 'broadband deals' grid.
 - [x] WHEN filtering by broadband AND tv THEN show the 4 deals for broadband and tv only
 - [x] WHEN filtering by broadband AND mobile THEN show the 1 deal for broadband and mobile only
 - [x] WHEN filtering by Sky THEN show the 1 deal for Sky only
-- [ ] WHEN filtering by BT, broadband AND tv THEN show the 2 deals for BT with broadband and tv only
+- [x] WHEN filtering by BT, broadband AND tv THEN show the 2 deals for BT with broadband and tv only
 
-NOTE: 'Broadband' and 'Fibre Broadband' should be considered the same product. 'Phone' should be ignored.
+Notes: 
+- 'Broadband' and 'Fibre Broadband' should be considered the same product
+- 'Phone' should be ignored

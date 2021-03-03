@@ -18,7 +18,10 @@ class Store extends Observable {
     let productFilters = this.state.productFilters,
         providerFilter = this.state.providerFilter,
         filterable = [],
-        filtered = [],
+        filtered_products = [],
+        filtered_provider,
+        filteredIds_products = [],
+        filteredId_provider,
         filteredIds = [],
         filteredDeals = [];
 
@@ -42,26 +45,38 @@ class Store extends Observable {
       return deal; 
     });
 
-    if (this.state.productFilters.length) {
-      // Create an array of deal IDs that match the filter criteria 
-      filtered = filterable.filter(deal => 
-        productFilters.every((productFilter) => {
-          if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
+    if (this.state.productFilters.length || this.state.providerFilter) {
+      if (this.state.productFilters.length) {
+        // Create an array of deal IDs that match the filter criteria 
+        filtered_products = filterable.filter(deal => 
+          productFilters.every((productFilter) => {
+            if (deal.productTypes.includes(productFilter) && deal.productTypes.length == productFilters.length) {
+              return deal;
+            }
+          })
+        );
+
+        filteredIds_products = filtered_products.map(filteredDeal => filteredDeal.id);
+      }
+
+      if (this.state.providerFilter) {
+        // Create an array of deal IDs that match the filter criteria 
+        filtered_provider = filterable.filter((deal) => {
+          if (deal.provider.name == providerFilter) {
             return deal;
           }
-        })
-      );
+        });
 
-      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
-    } else if (this.state.providerFilter) {
-      // Create an array of deal IDs that match the filter criteria 
-      filtered = filterable.filter((deal) => {
-        if (deal.provider.name == providerFilter) {
-          return deal;
-        }
-      });
+        filteredId_provider = filtered_provider.map(filteredDeal => filteredDeal.id);
+      }
 
-      filteredIds = filtered.map(filteredDeal => filteredDeal.id);
+      if (filteredIds_products.length && !filteredId_provider) {
+        filteredIds = filteredIds_products; 
+      } else if (filteredId_provider && !filteredIds_products.length) {
+        filteredIds = filteredId_provider; 
+      } else {
+        filteredIds = filteredIds_products.filter(filteredId => filteredId_provider.includes(filteredId)); 
+      }
     } else {
       filteredIds = this.state.deals.map(deal => deal.id); 
     }

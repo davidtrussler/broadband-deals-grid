@@ -30,3 +30,13 @@ npm run serve
 # Run tests
 npm run test
 ```
+
+## Improvements
+
+Some suggested tasks to improve the project
+
+- [ ] Improve cumbersome filter method
+- [ ] Replace checkboxes with more semantically correct radios on provider filters
+- [ ] Layout: stack panels on smaller viewports
+- [ ] Layout: add show/hide feature for filters panel on smaller viewports
+- [ ] Layout: stack deal features on smaller viewports

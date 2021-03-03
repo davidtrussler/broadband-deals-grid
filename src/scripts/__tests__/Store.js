@@ -23,12 +23,20 @@ describe("filter", () => {
 	it("should return the 4 broadband only deals when filtering by broadband", () => {
 		// Act
 		sut.setProductFilter('Broadband');
-		sut.filter(); 
+		sut.filter();
 
 		let result = sut.deals;
 
 		// Assert
-		expect(result.map(deal => deal.id)).toEqual([6158, 4359, 4371, 5459]);
+		let expected = [];
+
+		mockData.deals.map(deal => {
+			if ([6158, 4359, 4371, 5459].includes(deal.id)) {
+				expected.push(deal);
+			}
+		});
+
+		expect(result).toEqual(expected);
 	});
 
 	// Scenario 3: WHEN filtering by broadband AND tv THEN show the 4 deals for broadband and tv only
@@ -40,7 +48,15 @@ describe("filter", () => {
 		let result = sut.deals;
 
 		// Assert
-		expect(result.map(deal => deal.id)).toEqual([6074, 5738, 6165, 6468]);
+		let expected = [];
+
+		mockData.deals.map(deal => {
+			if ([6074, 5738, 6165, 6468].includes(deal.id)) {
+				expected.push(deal);
+			}
+		});
+
+		expect(result).toEqual(expected);
 	});
 
 	// Scenario 4: WHEN filtering by broadband AND mobile THEN show the 1 deal for broadband and mobile only
@@ -53,7 +69,15 @@ describe("filter", () => {
 		let result = sut.deals;
 
 		// Assert
-		expect(result.map(deal => deal.id)).toEqual([4276]);
+		let expected = [];
+
+		mockData.deals.map(deal => {
+			if ([4276].includes(deal.id)) {
+				expected.push(deal);
+			}
+		});
+
+		expect(result).toEqual(expected);
 	});
 
 	// Scenario 5: WHEN filtering by Sky THEN show the 1 deal for Sky only
@@ -61,13 +85,21 @@ describe("filter", () => {
 		// Act
 		sut.setProductFilter('Broadband');
 		sut.setProductFilter('Mobile');
-		sut.setProviderFilter('Sky'); 
+		sut.setProviderFilter(1);
 		sut.filter();
 
 		let result = sut.deals;
 
 		// Assert
-		expect(result.map(deal => deal.id)).toEqual([6468]);
+		let expected = [];
+
+		mockData.deals.map(deal => {
+			if ([6468].includes(deal.id)) {
+				expected.push(deal);
+			}
+		});
+
+		expect(result).toEqual(expected);
 	});
 
 	// WHEN filtering by BT, broadband AND tv THEN show the 2 deals for BT with broadband and tv only
@@ -75,12 +107,20 @@ describe("filter", () => {
 		// Act
 		sut.setProductFilter('TV');
 		sut.setProductFilter('Broadband');
-		sut.setProviderFilter('BT');
+		sut.setProviderFilter(3);
 		sut.filter();
 
 		let result = sut.deals;
 
 		// Assert
-		expect(result.map(deal => deal.id)).toEqual([6074, 5738]);
+		let expected = [];
+
+		mockData.deals.map(deal => {
+			if ([6074, 5738].includes(deal.id)) {
+				expected.push(deal);
+			}
+		});
+
+		expect(result).toEqual(expected);
 	});
 });

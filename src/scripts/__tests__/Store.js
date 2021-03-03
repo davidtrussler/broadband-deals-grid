@@ -85,7 +85,7 @@ describe("filter", () => {
 		// Act
 		sut.setProductFilter('Broadband');
 		sut.setProductFilter('Mobile');
-		sut.setProviderFilter('Sky'); 
+		sut.setProviderFilter(1);
 		sut.filter();
 
 		let result = sut.deals;
@@ -107,7 +107,7 @@ describe("filter", () => {
 		// Act
 		sut.setProductFilter('TV');
 		sut.setProductFilter('Broadband');
-		sut.setProviderFilter('BT');
+		sut.setProviderFilter(3);
 		sut.filter();
 
 		let result = sut.deals;

@@ -63,7 +63,7 @@ class Store extends Observable {
       if (this.state.providerFilter) {
         // Create an array of deal IDs that match the filter criteria 
         filtered_provider = filterable.filter((deal) => {
-          if (deal.provider.name == providerFilter) {
+          if (deal.provider.id == providerFilter) {
             return deal;
           }
         });

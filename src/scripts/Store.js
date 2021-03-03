@@ -15,7 +15,8 @@ class Store extends Observable {
   }
 
   filter() {
-    let productFilters = this.state.productFilters,
+    let deals = JSON.parse(JSON.stringify(this.state.deals)), 
+        productFilters = this.state.productFilters,
         providerFilter = this.state.providerFilter,
         filterable = [],
         filtered_products = [],
@@ -26,7 +27,7 @@ class Store extends Observable {
         filteredDeals = [];
 
     // Create a new array of deals in filterable state
-    filterable = this.state.deals.map((deal) => {
+    filterable = deals.map((deal) => {
       deal.productTypes = deal.productTypes.map((productType) => {
         // Make all product names lower case
         productType = productType.toLowerCase();

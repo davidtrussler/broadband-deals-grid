@@ -1,6 +1,32 @@
 import Store from "../Store";
 import mockData from "../../../public/db.json";
 
+describe('sort', () => {
+	let sut;
+
+	beforeAll(() => {
+		// Arrange
+		sut = new Store();
+		sut.setDeals(mockData.deals);
+	});
+
+	it('should return the filtered deals sorted according to a sort criteria of default', () => {
+		sut.setSortValue('default'); 
+
+		let result = sut.sort(mockData.deals);
+
+		expect(result).toEqual(mockData.deals); 
+	})
+
+	it('should return the filtered deals sorted according to a sort criteria of upfront cost', () => {
+		sut.setSortValue('upfrontCost'); 
+
+		let result = sut.sort(mockData.deals);
+
+		expect(result.map(result => {})).toEqual([]); 
+	})
+});
+
 describe("filter", () => {
 	let sut;
 

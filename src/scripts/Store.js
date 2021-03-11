@@ -6,12 +6,13 @@ class Store extends Observable {
     this.state = {
       deals: [],
       productFilters: [],
-      providerFilter: null
+      providerFilter: null, 
+      sortValue: null
     };
   }
 
   get deals() {
-    return this.filter();
+    return this.sort(this.filter());
   }
 
   filter() {
@@ -92,9 +93,26 @@ class Store extends Observable {
     return filteredDeals;
   }
 
+  sort(filteredDeals) {
+    let value = this.state.sortValue; 
+
+    if (value === 'default') {
+      return filteredDeals; 
+    }
+
+    return filteredDeals.sort((a, b) => {
+      return a.cost[value] - b.cost[value]; 
+    })
+  }
+
   setDeals(data) {
     this.state.deals = data;
     this.notify(this.state);
+  }
+
+  setSortValue(value) {
+    this.state.sortValue = value;
+    this.notify(this.state); 
   }
 
   setProductFilter(value) {

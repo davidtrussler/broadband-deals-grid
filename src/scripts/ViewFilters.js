@@ -7,9 +7,16 @@ class ViewFilters {
     this.providerFilters = Array.from(
       document.getElementsByClassName("js-filter-provider")
     );
+    this.sortSelector = document.querySelector(".js-sort"); 
     this.onProductFilterChange = this.onProductFilterChange.bind(this);
     this.onProviderFilterChange = this.onProviderFilterChange.bind(this);
+    this.onSort = this.onSort.bind(this);
     this.addFilterEventHandlers();
+    this.addSortEventHandler(); 
+  }
+
+  addSortEventHandler() {
+    this.sortSelector.addEventListener('change', this.onSort); 
   }
 
   addFilterEventHandlers() {
@@ -36,6 +43,10 @@ class ViewFilters {
         element.removeEventListener("change", this.onProviderFilterChange);
       });
     }
+  }
+
+  onSort(e) {
+    this.store.setSortValue(e.target.value); 
   }
 
   onProductFilterChange(event) {
